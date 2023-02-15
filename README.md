@@ -1,8 +1,6 @@
 # uci-ai-java
 > neural net for uci digit categorisation
 
-### 🏠 [Homepage](/Digits-Recognition-using-Neural-Network/src/RecognizingHandwrittenDigits/RecognizingHandwrittenDigits.java)
-
 ## Prerequisite
 
 ### Java Development Kit (JDK) 
@@ -18,14 +16,10 @@ set JAVA_HOME="C:\[Path to folder]\Java\jdk-11.0.14
 ```sh
 %JAVA_HOME%\bin
 ```
-<p align="center">
-  <img height="400" src="https://github.com/rohan-bhautoo/Point-Of-Sales-System/blob/master/Screenshots/Env%20Variable.png">
-</p>
-
 ## Neural Network
 > A neural network-based classifier, called Multi-Layer perceptron (MLP), was used in the project to classify handwritten digits. The MLP consists of three layers which are the input layer, hidden layer and output layer.
 <p align="center">
-  <img height="300" src="https://github.com/rohan-bhautoo/Digits-Recognition-using-Neural-Network/blob/main/imgs/multi-layer-perceptron.jpg">
+  <img height="300" src="/imgs/multi-layer-perceptron.jpg">
 </p>
 
 > Each of these layers contain a certain number of nodes which are also called neurons and each node in a layer is connected to all other nodes to the next layer. This can also be referred to as the feed forward network. The number of nodes in the input layer depends upon the number of attributes present in the dataset. For this project, the input attributes are integers in the range ```0..16``` and the last attribute is the class code ```0..9```. The number of nodes in the output layer relies on the number of apparent classes that exist in the dataset. The number of hidden layers is hard to determine as the numbers are selected experimentally. Thereby, the following numbers are given to the first and second hidden layers which can be found in the [RecognizingHandwrittenDigits.java](/Digits-Recognition-using-Neural-Network/src/RecognizingHandwrittenDigits/RecognizingHandwrittenDigits.java) class.
@@ -39,7 +33,7 @@ final static int SECOND_HIDDEN_LAYER_NODE_AMOUNT = 15;
 ### Hidden Layers
 > Hidden layers of a neural network are just a way to add more neurons in between the input and output layers.
 <p align="center">
-  <img height="300" src="https://github.com/rohan-bhautoo/Digits-Recognition-using-Neural-Network/blob/main/imgs/single-layer-perceptron.jpg">
+  <img height="300" src="/imgs/single-layer-perceptron.jpg">
 </p>
 
 > Different mathematical calculations are implemented to perform the algorithm. First is the dot product function, 
@@ -52,7 +46,7 @@ final static int SECOND_HIDDEN_LAYER_NODE_AMOUNT = 15;
 ### Sigmoid Function
 > The Sigmoid function is also called an activation function, which becomes active to allow input signal Z to pass through the neuron if the input is big enough but it limits the output if the input Z is too small.
 <p align="center">
-  <img height="300" src="https://github.com/rohan-bhautoo/Digits-Recognition-using-Neural-Network/blob/main/imgs/sigmoid-function-curve.png">
+  <img height="300" src="/imgs/sigmoid-function-curve.png">
 </p>
 
 > The graph above shows when the output Z is larger or equal to 0.5, it outputs 1 else if it is smaller than 0.5, it outputs 0. 
@@ -62,7 +56,7 @@ final static int SECOND_HIDDEN_LAYER_NODE_AMOUNT = 15;
 ### Single-Layer Perceptron vs Perceptron with Hidden Layer
 > Perceptron with hidden layers were most preferable to implement because a research paper has shown that single-layer perceptron was unable to learn an XOR gate. For example, it cannot understand the logic that the weather has to be either hot or cold, but not both. Logic gates such as AND, OR, NOT, XOR are very important building blocks of any digital system. However, the multi-layer perceptron was able to learn the XOR gate with backpropagation. Hidden layers can twist the problem in a way that makes it easy for the neural network to classify the problem or pattern. This is very useful for the recognition of handwritten digits.
 <p align="center">
-  <img height="300" src="https://github.com/rohan-bhautoo/Digits-Recognition-using-Neural-Network/blob/main/imgs/single-layer-perceptron-with-hidden-layer.jpg">
+  <img height="300" src="/imgs/single-layer-perceptron-with-hidden-layer.jpg">
 </p>
 
 ## Using MLP for Recognition of Handwritten Digits
@@ -70,5 +64,5 @@ final static int SECOND_HIDDEN_LAYER_NODE_AMOUNT = 15;
 > 
 > After training the neural network with data from the [first CSV file](/Digits-Recognition-using-Neural-Network/src/RecognizingHandwrittenDigits/Data/cw2DataSet1.csv), the first 4 hidden neurons will be able to recognize the patterns. Then, the [testing CSV file](/Digits-Recognition-using-Neural-Network/src/RecognizingHandwrittenDigits/Data/cw2DataSet2.csv) is fed to the neural network to trigger the hidden neurons and output the correct digit.
 <p align="center">
-  <img height="300" src="https://github.com/rohan-bhautoo/Digits-Recognition-using-Neural-Network/blob/main/imgs/Trained-neural-network.jpg">
+  <img height="300"/imgs/Trained-neural-network.jpg">
 </p>
