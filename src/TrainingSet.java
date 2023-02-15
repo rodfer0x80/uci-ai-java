@@ -1,13 +1,8 @@
-/*
- * Class that holds sets for training and testing, includes methods for control of a set
- */
-package csd3939_coursework2;
-
+package RecognizingHandwrittenDigits;
 import java.util.ArrayList;
 
 /**
- * @author Antanas
- * @date 2nd of March 2019
+ * Class that holds sets for training and testing, includes methods for control of a set
  */
 public class TrainingSet {
     public final int INPUT_SIZE;

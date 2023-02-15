@@ -1,11 +1,7 @@
-/*
- * Class that contains utility methods for the application
- */
-package csd3939_coursework2;
-import java.util.Comparator;
+package RecognizingHandwrittenDigits;
+
 /**
- * @author Antanas
- * @date 28 th of February 2019
+ * Class that contains utility methods for the application
  */
 public class Utility {
     
@@ -145,17 +141,7 @@ public class Utility {
        }
        return returnIndex;
    }
-   
 
-    /**
-     * Compare class, used to compare distances of the results
-     */
-    static class DistanceComparator implements Comparator<KNN_Digit_Result>{
-        @Override
-        public int compare(KNN_Digit_Result a, KNN_Digit_Result b){
-            return a.distance < b.distance ? -1 : a.distance == b.distance ? 0 : 1;
-        }
-    }
     /**
      * Prints out the accuracy of an algorithm
      * @param goodResults total of correct guessed results

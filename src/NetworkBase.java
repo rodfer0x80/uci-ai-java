@@ -1,19 +1,11 @@
-/*
- * Main class for neural netowrk implamentation, build the net, trains and etc.
- */
-package csd3939_coursework2;
-import static csd3939_coursework2.CSD3939_CourseWork2.LEARNING_RATE;
-import static csd3939_coursework2.CSD3939_CourseWork2.BIAS_RANGE_SMALLEST;
-import static csd3939_coursework2.CSD3939_CourseWork2.BIAS_RANGE_BIGGEST;
-import static csd3939_coursework2.CSD3939_CourseWork2.WEIGHTS_RANGE_SMALLEST;
-import static csd3939_coursework2.CSD3939_CourseWork2.WEIGHTS_RANGE_BIGGEST;
+package RecognizingHandwrittenDigits;
+
 /**
- * @author Antanas
- * @date 28th of February 2019
+ * Main class for neural network implementation, build the net, trains and etc.
  */
 public class NetworkBase {
 
-    /*Constats defining the neural network*/
+    /* Variable defining the neural network*/
     public final int[] NETWORK_LAYER_SIZE;
     public final int INPUT_LAYER_SIZE;
     public final int OUTPUT_LAYER_SIZE;
@@ -55,12 +47,12 @@ public class NetworkBase {
             //Holds the derivative values for change sensitivity  
             this.output_derivative[index] = new double[NETWORK_LAYER_SIZE[index]];
             //Fills the bias with random 
-            this.bias[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], BIAS_RANGE_SMALLEST, BIAS_RANGE_BIGGEST);
+            this.bias[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], RecognizingHandwrittenDigits.BIAS_RANGE_SMALLEST, RecognizingHandwrittenDigits.BIAS_RANGE_BIGGEST);
             
             //Exclude the input layer[0] 
             if(index > 0){
                 //Weights for a layer, also specifie the previous layer.
-                weights[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], NETWORK_LAYER_SIZE[index-1], WEIGHTS_RANGE_SMALLEST, WEIGHTS_RANGE_BIGGEST);
+                weights[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], NETWORK_LAYER_SIZE[index-1], RecognizingHandwrittenDigits.WEIGHTS_RANGE_SMALLEST, RecognizingHandwrittenDigits.WEIGHTS_RANGE_BIGGEST);
             }
         }
     }
@@ -87,7 +79,7 @@ public class NetworkBase {
                 double sum = 0;
                 for(int previousNeuron = 0; previousNeuron < NETWORK_LAYER_SIZE[layer-1];
                         previousNeuron++){
-                    //Sum is increast by the output of previous layer and
+                    //Sum is increased by the output of previous layer and
                     //multiplied by the weights of a previous neuron
                     sum += output[layer-1][previousNeuron] * 
                             weights[layer][neuron][previousNeuron];
@@ -118,7 +110,7 @@ public class NetworkBase {
         for(int index = 0; index < loops; index++){
             TrainingSet batch = set.extractBatch(batch_size);
             for(int b = 0; b < batch_size; b++){
-                this.training(batch.getInput(b), batch.getOutput(b), LEARNING_RATE);
+                this.training(batch.getInput(b), batch.getOutput(b), RecognizingHandwrittenDigits.LEARNING_RATE);
             }
         }
     }
@@ -187,6 +179,7 @@ public class NetworkBase {
             }
         }
     }
+
     /**
      * Function for gradient descent learning rule for updating the weights
      * @param learningRate learning rate
@@ -205,13 +198,14 @@ public class NetworkBase {
             }
         }
     }
+
     /**
      * Simple sigmoid function
      * @param inputValue
      * @return returns the output of sigmoid
      */
     private double sigmoidFunction(double inputValue){
-        //Standart sigmoid formula calculation as a double value
+        //Standard sigmoid formula calculation as a double value
         return 1D /(1 + Math.exp(-inputValue));
     }
 }
