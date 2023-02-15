@@ -1,15 +1,5 @@
-<p align="center">
-  <img height="300" src="https://github.com/rohan-bhautoo/Digits-Recognition-using-Neural-Network/blob/main/imgs/Neural-network.png">
-</p>
-<h1 align="center">Digits Recognition using Neural Network</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-brightgreen.svg" />
-  <img alt="Java" src="https://img.shields.io/badge/Java-ED8B00?logo=java&logoColor=white" />
-  <img alt="JDK" src="https://img.shields.io/badge/JDK->=11.0.14-blue.svg" />
-</p>
-
-## Description
-> A machine learning system to categorise one of the UCI digit tasks using Neural Network in Java.
+# uci-ai-java
+> neural net for uci digit categorisation
 
 ### 🏠 [Homepage](/Digits-Recognition-using-Neural-Network/src/RecognizingHandwrittenDigits/RecognizingHandwrittenDigits.java)
 
