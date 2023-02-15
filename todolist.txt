@@ -1,0 +1,9 @@
+# todolist
+[ ] fix javafx library dependency in eclipseide
+[ ] change code style, structure and comments
+[ ] refactor
+[ ] test different bias
+[ ] refactor with best bias
+[ ] update readme
+[ ] write docs 1-2 pages from readme
+[ ] deliver
