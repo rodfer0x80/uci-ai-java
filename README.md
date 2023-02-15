@@ -72,23 +72,3 @@ final static int SECOND_HIDDEN_LAYER_NODE_AMOUNT = 15;
 <p align="center">
   <img height="300" src="https://github.com/rohan-bhautoo/Digits-Recognition-using-Neural-Network/blob/main/imgs/Trained-neural-network.jpg">
 </p>
-
-## Usage
-> Compile all the java files using:
-```sh
-javac *.java
-```
-> Then, execute the algorithm
-```sh
-java RecognizingHandwrittenDigits
-```
-
-## Author
-
-👤 **Rohan Bhautoo**
-* Github: [@rohan-bhautoo](https://github.com/rohan-bhautoo)
-* LinkedIn: [@rohan-bhautoo](https://linkedin.com/in/rohan-bhautoo)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
