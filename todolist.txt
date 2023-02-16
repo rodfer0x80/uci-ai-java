@@ -1,5 +1,6 @@
 # todolist
-[x] fix javafx library dependency in eclipseide and run the code
+[x] fix javafx library dependency in eclipseide
+*[x] fix logic error and make this actually run with openjdk17 lts
 [ ] change code style, structure and comments
 [ ] refactor
 [ ] test different bias
