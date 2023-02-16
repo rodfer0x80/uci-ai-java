@@ -1,4 +1,4 @@
-package neuralnet;
+package uci_neuralnet;
 import java.util.ArrayList;
 
 /**

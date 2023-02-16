@@ -1,4 +1,4 @@
-package neuralnet;
+package uci_neuralnet;
 
 /**
  * Class that contains utility methods for the application

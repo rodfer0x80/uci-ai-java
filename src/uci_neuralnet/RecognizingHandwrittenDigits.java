@@ -1,4 +1,4 @@
-package neuralnet;
+package uci_neuralnet;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class RecognizingHandwrittenDigits {
 
     //Default settings
-    public static final String TRAINING_FILE_PATH = "./data/training_data.csv";
-    public static final String TEST_FILE_PATH = "./data/test_data.csv";
+    public static final String TRAINING_FILE_PATH = "./data/training_set.csv";
+    public static final String TEST_FILE_PATH = "./data/test_set.csv";
     public final static boolean SHOW_LABELS = true; // if set to true will print the guess and original labels
 
     //Neural Network settings

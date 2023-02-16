@@ -1,5 +1,5 @@
 # todolist
-[ ] fix javafx library dependency in eclipseide
+[x] fix javafx library dependency in eclipseide and run the code
 [ ] change code style, structure and comments
 [ ] refactor
 [ ] test different bias
