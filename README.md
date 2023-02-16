@@ -1,21 +1,13 @@
 # uci-ai-java
 > neural net for uci digit categorisation
 
-## Prerequisite
+## Requirements
+''''java
+Java17 SDK (openjdk 17lts)
+JavaFX (openjfx 17lts)
+EclipseIDE (or jvm and javac)
+''''
 
-### Java Development Kit (JDK) 
-> JDK version 11 is used for this project as it includes the JavaFX library. Download it [here](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html).
-> 
-> For Windows:
-```sh
-set JAVA_HOME="C:\[Path to folder]\Java\jdk-11.0.14
-```
-> Enter the Environment Variables in System Properties.
-> 
-> Add **%JAVA_HOME%\bin** into Path.
-```sh
-%JAVA_HOME%\bin
-```
 ## Neural Network
 > A neural network-based classifier, called Multi-Layer perceptron (MLP), was used in the project to classify handwritten digits. The MLP consists of three layers which are the input layer, hidden layer and output layer.
 <p align="center">
