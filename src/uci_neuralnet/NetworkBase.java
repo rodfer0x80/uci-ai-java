@@ -96,12 +96,12 @@ public class NetworkBase {
      * @param loops amount of loops to process
      * @param batch_size  batch size used only in bigger sets ( should improve accuracy )
      */
-    public void train(TrainingSet set, int loops, int batch_size){
+    public void train(Dataset set, int loops, int batch_size){
         if(set.INPUT_SIZE != INPUT_LAYER_SIZE || set.OUTPUT_SIZE != OUTPUT_LAYER_SIZE){
             return;
         }
         for(int index = 0; index < loops; index++){
-            TrainingSet batch = set.extractBatch(batch_size);
+            Dataset batch = set.extractBatch(batch_size);
             for(int b = 0; b < batch_size; b++){
                 this.training(batch.getInput(b), batch.getOutput(b), Categoriser.LEARNING_RATE);
             }
@@ -131,7 +131,7 @@ public class NetworkBase {
      * @param set training set
      * @return squared error of a set
      */
-    public double MeanSquaredErrorFunction(TrainingSet set){
+    public double MeanSquaredErrorFunction(Dataset set){
         double error = 0;
         for(int index = 0; index < set.size(); index++){
             error += MeanSquaredErrorFunction(set.getInput(index), set.getOutput(index));
