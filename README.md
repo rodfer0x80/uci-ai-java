@@ -2,11 +2,11 @@
 > neural net for uci digit categorisation
 
 ## Requirements
-''''java
+````java
 Java17 SDK (openjdk 17lts)
 JavaFX (openjfx 17lts)
 EclipseIDE (or jvm and javac)
-''''
+````
 
 ## Neural Network
 > A neural network-based classifier, called Multi-Layer perceptron (MLP), was used in the project to classify handwritten digits. The MLP consists of three layers which are the input layer, hidden layer and output layer.
