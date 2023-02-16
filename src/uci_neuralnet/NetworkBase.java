@@ -48,12 +48,12 @@ public class NetworkBase {
             // holds the derivative values for change sensitivity  
             this.output_derivative[index] = new double[NETWORK_LAYER_SIZE[index]];
             // fills the bias with random 
-            this.bias[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], RecognizingHandwrittenDigits.BIAS_RANGE_SMALLEST, RecognizingHandwrittenDigits.BIAS_RANGE_BIGGEST);
+            this.bias[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], Categoriser.BIAS_RANGE_SMALLEST, Categoriser.BIAS_RANGE_BIGGEST);
             
             // exclude the input layer[0] 
             if(index > 0){
                 // weights for a layer, specific from previous layer.
-                weights[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], NETWORK_LAYER_SIZE[index-1], RecognizingHandwrittenDigits.WEIGHTS_RANGE_SMALLEST, RecognizingHandwrittenDigits.WEIGHTS_RANGE_BIGGEST);
+                weights[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], NETWORK_LAYER_SIZE[index-1], Categoriser.WEIGHTS_RANGE_SMALLEST, Categoriser.WEIGHTS_RANGE_BIGGEST);
             }
         }
     }
@@ -103,7 +103,7 @@ public class NetworkBase {
         for(int index = 0; index < loops; index++){
             TrainingSet batch = set.extractBatch(batch_size);
             for(int b = 0; b < batch_size; b++){
-                this.training(batch.getInput(b), batch.getOutput(b), RecognizingHandwrittenDigits.LEARNING_RATE);
+                this.training(batch.getInput(b), batch.getOutput(b), Categoriser.LEARNING_RATE);
             }
         }
     }

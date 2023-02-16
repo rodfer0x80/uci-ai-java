@@ -4,18 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-/**
- * This is the main class that has all the options and settings, also runs other
- * to solve the digit task.
- */
-public class RecognizingHandwrittenDigits {
+// static frontend class for neural net
+public class Categoriser {
 
-    //Default settings
     public static final String TRAINING_FILE_PATH = "./data/training_set.csv";
     public static final String TEST_FILE_PATH = "./data/test_set.csv";
     public final static boolean SHOW_LABELS = true; // if set to true will print the guess and original labels
 
-    //Neural Network settings
     public static final double LEARNING_RATE = 0.05;
     public final static double BIAS_RANGE_SMALLEST = -0.5;
     public final static double BIAS_RANGE_BIGGEST = 0.7;
@@ -28,23 +23,7 @@ public class RecognizingHandwrittenDigits {
     final static int SECOND_HIDDEN_LAYER_NODE_AMOUNT = 15;
     final static int INPUT_LAYER_NODE_AMOUNT = 64; // image is 64pixels 8*8
 
-    /**
-     * Main method for the application
-     * @param args
-     */
-    public static void main(String[] args) {
-            System.out.println("Starting neural network...");
-            //Build a network with 64 nodes in input layer, 26 in 1st hidden layer, 15 in 2nd hidden layer and 10 output
-            NetworkBase network = new NetworkBase(new int[]{INPUT_LAYER_NODE_AMOUNT, FIRST_HIDDEN_LAYER_NODE_AMOUNT, SECOND_HIDDEN_LAYER_NODE_AMOUNT, 10});
-            try{
-                TrainingSet set = createTrainingSet();
-                trainData(network, set , TRAINING_EPOCHS_VALUE, TRAINING_LOOPS_VALUE, TRAINING_BATCH_SIZE);
-                TrainingSet testSet = createTestingSet();
-                testTrainSet(network, testSet);
-            }catch(FileNotFoundException ex) {
-                System.out.println("Error when reading NN test or train file!");
-            }
-    }
+
 
     /**
      * This method tests the network, also keeps tracks of the the guessed results and provided
