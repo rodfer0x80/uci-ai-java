@@ -1,8 +1,7 @@
 package uci_neuralnet;
 
 
-// neural network implementation
-public class NetworkBase {
+public class NeuralNet {
 
     public final int[] NETWORK_LAYER_SIZE;
     public final int INPUT_LAYER_SIZE;
@@ -12,10 +11,12 @@ public class NetworkBase {
     // 1st dimension :: layer index
     // 2nd dimension :: neuron index
     private double[][] output;
+    
     // 1st :: layer
     // 2nd :: neuron
     // 3rd :: previous layer neuron (output specific)
     private double[][][] weights;
+    
     //1st :: layer
     // 2nd :: neuron
     private double[][]bias;
@@ -23,9 +24,8 @@ public class NetworkBase {
     private double[][] error_signal;
     private double[][] output_derivative;
     
-     // build neural net implementation
-     // NETWORK_LAYER_SIZE the size of neural network
-    public NetworkBase(int[] NETWORK_LAYER_SIZE){
+     // build neural net with l1(input), l2, l3 (output) and output domain sizes
+    public NeuralNet(int[] NETWORK_LAYER_SIZE){
         this.NETWORK_LAYER_SIZE = NETWORK_LAYER_SIZE;
         this.INPUT_LAYER_SIZE = NETWORK_LAYER_SIZE[0];
         this.NETWORK_SIZE = NETWORK_LAYER_SIZE.length;
@@ -41,15 +41,10 @@ public class NetworkBase {
         this.output_derivative = new double[NETWORK_SIZE][];
         
         for(int index = 0; index < NETWORK_SIZE; index++){
-            // set layers size
             this.output[index] = new double[NETWORK_LAYER_SIZE[index]];
-            // holds error values
             this.error_signal[index] = new double[NETWORK_LAYER_SIZE[index]];
-            // holds the derivative values for change sensitivity  
             this.output_derivative[index] = new double[NETWORK_LAYER_SIZE[index]];
-            // fills the bias with random 
             this.bias[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], Categoriser.BIAS_RANGE_SMALLEST, Categoriser.BIAS_RANGE_BIGGEST);
-            
             // exclude the input layer[0] 
             if(index > 0){
                 // weights for a layer, specific from previous layer.
@@ -58,7 +53,7 @@ public class NetworkBase {
         }
     }
 
-    //  perform implementation  based on given input data 
+    // perform implementation  based on given input data 
     public double[] calculationFunction(double[] input){
         // if this is true, too much or not enough data, and it is impossible
         // to perform a calculation, return null
@@ -192,13 +187,8 @@ public class NetworkBase {
         }
     }
 
-    /**
-     * Simple sigmoid function
-     * @param inputValue
-     * @return returns the output of sigmoid
-     */
+    // sigmoid function of n
     private double sigmoidFunction(double inputValue){
-        //Standard sigmoid formula calculation as a double value
         return 1D /(1 + Math.exp(-inputValue));
     }
 }

@@ -29,10 +29,11 @@ public class Categoriser {
     final static int SECOND_HIDDEN_LAYER_NODE_AMOUNT = 15;
     // img is 64pixels 8*8
     final static int INPUT_LAYER_NODE_AMOUNT = 64; 
+    final static int OUTPUT_DOMAIN = 10;
 
 
     // tests neural network using training set
-    public static void testModel(NetworkBase net, Dataset set){
+    public static void testModel(NeuralNet net, Dataset set){
         int correct = 0;
         for(int i = 0; i < set.size(); i++){
             double highest = Utility.returnIndexOfHighestValue(net.calculationFunction(set.getInput(i)));
@@ -76,7 +77,7 @@ public class Categoriser {
     // takes neural net, training data (parsed)
     // bias n of epochs for training and m iterations per epoch
     // flag large model improve performance and maybe accuracy
-    public static void trainModel(NetworkBase net, Dataset set, int epochs, int loops, int batch_size){
+    public static void trainModel(NeuralNet net, Dataset set, int epochs, int loops, int batch_size){
         System.out.println("Training neural network...");
         for(int epoch= 0; epoch < epochs; epoch++){
             net.train(set, loops, batch_size);
