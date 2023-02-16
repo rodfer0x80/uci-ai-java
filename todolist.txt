@@ -2,6 +2,8 @@
 [x] fix javafx library dependency in eclipseide
 *[x] fix logic error and make this actually run with openjdk17 lts
 [ ] change code style, structure and comments
+[ ] understand how data is played around here
+[ ] understand neural net training
 [ ] refactor
 [ ] test different bias
 [ ] refactor with best bias
