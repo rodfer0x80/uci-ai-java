@@ -1,4 +1,4 @@
-package RecognizingHandwrittenDigits;
+package neuralnet;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,9 +11,9 @@ import java.util.Scanner;
 public class RecognizingHandwrittenDigits {
 
     //Default settings
-    public static final String TRAINING_FILE_PATH = "src/RecognizingHandwrittenDigits/Data/cw2DataSet1.csv";
-    public static final String TEST_FILE_PATH = "src/RecognizingHandwrittenDigits/Data/cw2DataSet2.csv";
-    public final static boolean SHOW_LABELS = true; //If set to true will print the guess and original labels
+    public static final String TRAINING_FILE_PATH = "./data/training_data.csv";
+    public static final String TEST_FILE_PATH = "./data/test_data.csv";
+    public final static boolean SHOW_LABELS = true; // if set to true will print the guess and original labels
 
     //Neural Network settings
     public static final double LEARNING_RATE = 0.05;
@@ -26,7 +26,7 @@ public class RecognizingHandwrittenDigits {
     final static int TRAINING_BATCH_SIZE = 32;
     final static int FIRST_HIDDEN_LAYER_NODE_AMOUNT = 26;
     final static int SECOND_HIDDEN_LAYER_NODE_AMOUNT = 15;
-    final static int INPUT_LAYER_NODE_AMOUNT = 64; //Because the image is 64pixels 8*8
+    final static int INPUT_LAYER_NODE_AMOUNT = 64; // image is 64pixels 8*8
 
     /**
      * Main method for the application

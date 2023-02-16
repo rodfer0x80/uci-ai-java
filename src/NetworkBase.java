@@ -1,35 +1,36 @@
-package RecognizingHandwrittenDigits;
+package neuralnet;
 
-/**
- * Main class for neural network implementation, build the net, trains and etc.
- */
+
+// neural network implementation
 public class NetworkBase {
 
-    /* Variable defining the neural network*/
     public final int[] NETWORK_LAYER_SIZE;
     public final int INPUT_LAYER_SIZE;
     public final int OUTPUT_LAYER_SIZE;
     public final int NETWORK_SIZE;
        
-    // First dimension - layer index, 2nd dimension - neuron index
+    // 1st dimension :: layer index
+    // 2nd dimension :: neuron index
     private double[][] output;
-    //1st - layer, 2nd - neuron, 3rd - previous layer neuron
+    // 1st :: layer
+    // 2nd :: neuron
+    // 3rd :: previous layer neuron (output specific)
     private double[][][] weights;
-    //1st layer, 2nd - neuron
+    //1st :: layer
+    // 2nd :: neuron
     private double[][]bias;
     
     private double[][] error_signal;
     private double[][] output_derivative;
     
-    /**
-     * Constructor method for the neural network
-     * @param NETWORK_LAYER_SIZE the size of neural network
-     */
+     // build neural net implementation
+     // NETWORK_LAYER_SIZE the size of neural network
     public NetworkBase(int[] NETWORK_LAYER_SIZE){
         this.NETWORK_LAYER_SIZE = NETWORK_LAYER_SIZE;
         this.INPUT_LAYER_SIZE = NETWORK_LAYER_SIZE[0];
         this.NETWORK_SIZE = NETWORK_LAYER_SIZE.length;
-        this.OUTPUT_LAYER_SIZE = NETWORK_LAYER_SIZE[NETWORK_SIZE-1]; //Index of the first layer is 0
+        // 1st layer index is 0
+        this.OUTPUT_LAYER_SIZE = NETWORK_LAYER_SIZE[NETWORK_SIZE-1];
         //=output[layer][neuron]
         this.output = new double[NETWORK_SIZE][];
         //=weights[layer][neuron][prevNeuron]
@@ -40,60 +41,52 @@ public class NetworkBase {
         this.output_derivative = new double[NETWORK_SIZE][];
         
         for(int index = 0; index < NETWORK_SIZE; index++){
-            //Set the size of the layers
+            // set layers size
             this.output[index] = new double[NETWORK_LAYER_SIZE[index]];
-            //Holds error values
+            // holds error values
             this.error_signal[index] = new double[NETWORK_LAYER_SIZE[index]];
-            //Holds the derivative values for change sensitivity  
+            // holds the derivative values for change sensitivity  
             this.output_derivative[index] = new double[NETWORK_LAYER_SIZE[index]];
-            //Fills the bias with random 
+            // fills the bias with random 
             this.bias[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], RecognizingHandwrittenDigits.BIAS_RANGE_SMALLEST, RecognizingHandwrittenDigits.BIAS_RANGE_BIGGEST);
             
-            //Exclude the input layer[0] 
+            // exclude the input layer[0] 
             if(index > 0){
-                //Weights for a layer, also specifie the previous layer.
+                // weights for a layer, specific from previous layer.
                 weights[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], NETWORK_LAYER_SIZE[index-1], RecognizingHandwrittenDigits.WEIGHTS_RANGE_SMALLEST, RecognizingHandwrittenDigits.WEIGHTS_RANGE_BIGGEST);
             }
         }
     }
 
-   /**
-    * Feedforward function
-    * @param input
-    * @return 
-    */
+    //  perform implementation  based on given input data 
     public double[] calculationFunction(double[] input){
-        //If this is true, too much or not enough data, and it is impossible
-        //to perform a calculation, return null
+        // if this is true, too much or not enough data, and it is impossible
+        // to perform a calculation, return null
         if(input.length != this.INPUT_LAYER_SIZE){
             return null;
         }
-        // index 0 is not really a layer, it sorta a buffer to store the data
+        // index 0 is not a layer but a buffer for input to the layer
         this.output[0] = input;
-        // Iteration through the rest of the layers 
         for(int layer = 1; layer < NETWORK_SIZE; layer ++){
-            //Iterate trough every neuron in specified layer
             for(int neuron = 0; neuron < NETWORK_LAYER_SIZE[layer]; neuron++){
-                //Sum 
-                
                 double sum = 0;
                 for(int previousNeuron = 0; previousNeuron < NETWORK_LAYER_SIZE[layer-1];
                         previousNeuron++){
-                    //Sum is increased by the output of previous layer and
-                    //multiplied by the weights of a previous neuron
+                    // sum is increased by the output of previous layer and
+                    // multiplied by the weights of a previous neuron
                     sum += output[layer-1][previousNeuron] * 
                             weights[layer][neuron][previousNeuron];
                 }
-                //Increase the sum with the bias of a particular neuron
+                // increase the sum with the bias of a particular neuron
                 sum += bias[layer][neuron];
                 
-                //Get the sigmoid of the sum
+                // get the sigmoid of the sum
                 output[layer][neuron] = sigmoidFunction(sum);
                 output_derivative[layer][neuron] = output[layer][neuron] * (1 - output[layer][neuron]);
                 
             }
         }
-        // Last layer return
+        // only last layer returns
         return output[NETWORK_SIZE-1];
     }
    

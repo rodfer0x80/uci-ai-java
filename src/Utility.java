@@ -1,4 +1,4 @@
-package RecognizingHandwrittenDigits;
+package neuralnet;
 
 /**
  * Class that contains utility methods for the application

@@ -1,4 +1,4 @@
-package RecognizingHandwrittenDigits;
+package neuralnet;
 import java.util.ArrayList;
 
 /**
