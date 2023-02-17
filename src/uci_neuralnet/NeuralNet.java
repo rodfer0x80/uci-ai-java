@@ -44,53 +44,16 @@ public class NeuralNet {
             this.output[index] = new double[NETWORK_LAYER_SIZE[index]];
             this.error_signal[index] = new double[NETWORK_LAYER_SIZE[index]];
             this.output_derivative[index] = new double[NETWORK_LAYER_SIZE[index]];
-            this.bias[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], Categoriser.BIAS_RANGE_SMALLEST, Categoriser.BIAS_RANGE_BIGGEST);
+            this.bias[index] = buildRandomArray(NETWORK_LAYER_SIZE[index], Categoriser.BIAS_RANGE_SMALLEST, Categoriser.BIAS_RANGE_BIGGEST);
             // exclude the input layer[0] 
             if(index > 0){
                 // weights for a layer, specific from previous layer.
-                weights[index] = Utility.buildRandomArray(NETWORK_LAYER_SIZE[index], NETWORK_LAYER_SIZE[index-1], Categoriser.WEIGHTS_RANGE_SMALLEST, Categoriser.WEIGHTS_RANGE_BIGGEST);
+                weights[index] = buildRandomArray(NETWORK_LAYER_SIZE[index], NETWORK_LAYER_SIZE[index-1], Categoriser.WEIGHTS_RANGE_SMALLEST, Categoriser.WEIGHTS_RANGE_BIGGEST);
             }
         }
-    }
-
-    // perform implementation  based on given input data 
-    public double[] calculationFunction(double[] input){
-        // if this is true, too much or not enough data, and it is impossible
-        // to perform a calculation, return null
-        if(input.length != this.INPUT_LAYER_SIZE){
-            return null;
-        }
-        // index 0 is not a layer but a buffer for input to the layer
-        this.output[0] = input;
-        for(int layer = 1; layer < NETWORK_SIZE; layer ++){
-            for(int neuron = 0; neuron < NETWORK_LAYER_SIZE[layer]; neuron++){
-                double sum = 0;
-                for(int previousNeuron = 0; previousNeuron < NETWORK_LAYER_SIZE[layer-1];
-                        previousNeuron++){
-                    // sum is increased by the output of previous layer and
-                    // multiplied by the weights of a previous neuron
-                    sum += output[layer-1][previousNeuron] * 
-                            weights[layer][neuron][previousNeuron];
-                }
-                // increase the sum with the bias of a particular neuron
-                sum += bias[layer][neuron];
-                
-                // get the sigmoid of the sum
-                output[layer][neuron] = sigmoidFunction(sum);
-                output_derivative[layer][neuron] = output[layer][neuron] * (1 - output[layer][neuron]);
-                
-            }
-        }
-        // only last layer returns
-        return output[NETWORK_SIZE-1];
     }
    
-    /**
-     * Training for the specified batch 
-     * @param set the set used for training
-     * @param loops amount of loops to process
-     * @param batch_size  batch size used only in bigger sets ( should improve accuracy )
-     */
+    // train model on data for all n iterations
     public void train(Dataset set, int loops, int batch_size){
         if(set.INPUT_SIZE != INPUT_LAYER_SIZE || set.OUTPUT_SIZE != OUTPUT_LAYER_SIZE){
             return;
@@ -102,56 +65,45 @@ public class NeuralNet {
             }
         }
     }
-    
-    /**
-     * Function for average squared difference between the estimated values and what is estimated
-     * @param input array of guesses
-     * @param target array of targets
-     * @return 
-     */
-    public double MeanSquaredErrorFunction(double[] input, double[] target){
-        if(input.length != INPUT_LAYER_SIZE || target.length != OUTPUT_LAYER_SIZE){
-            return 0;
-        }
-        calculationFunction(input);
-        double error = 0;
-        for(int index = 0; index < target.length; index++){
-            error += (target[index] - output[NETWORK_SIZE-1][index]) * (target[index] - output[NETWORK_SIZE-1][index]);
-        }
-        return error / (2D * target.length);
-    }
-    
-    /**
-     * Average squared difference between the estimated values and what is estimated for the set
-     * @param set training set
-     * @return squared error of a set
-     */
-    public double MeanSquaredErrorFunction(Dataset set){
-        double error = 0;
-        for(int index = 0; index < set.size(); index++){
-            error += MeanSquaredErrorFunction(set.getInput(index), set.getOutput(index));
-        }
-        return error / set.size();
-    }
-    
-    /**
-     * Training function as a main
-     * @param input input array
-     * @param target target array 
-     * @param learningRate  learning rate 
-     */
+
+    // train model by getting nn output, caculating error from label result
+    // and update weights to improve accuracy on next nn output response
+    // (only runtime no mem dump)
     public void training(double[] input, double[] target, double learningRate){
         if(input.length != INPUT_LAYER_SIZE || target.length != OUTPUT_LAYER_SIZE){
             return;
         }
-        calculationFunction(input);
+        calculateOutput(input);
         backpropError(target);
         updateWeights(learningRate);
     }
-    /**
-     * calculate a gradient that is needed in the calculation of the weights to be used in the network
-     * @param target  target output
-     */
+    
+    // get response output from nn based on given input
+    public double[] calculateOutput(double[] input){
+        if(input.length != this.INPUT_LAYER_SIZE){
+            return null;
+        }
+        // index 0 is not a layer but a buffer for input to the layer
+        this.output[0] = input;
+        for(int layer = 1; layer < NETWORK_SIZE; layer ++){
+            for(int neuron = 0; neuron < NETWORK_LAYER_SIZE[layer]; neuron++){
+                double sum = 0;
+                for(int previousNeuron = 0; previousNeuron < NETWORK_LAYER_SIZE[layer-1];
+                        previousNeuron++){
+                    sum += output[layer-1][previousNeuron] * 
+                            weights[layer][neuron][previousNeuron];
+                }
+                sum += bias[layer][neuron];
+                
+                output[layer][neuron] = sigmoidFunction(sum);
+                output_derivative[layer][neuron] = output[layer][neuron] * (1 - output[layer][neuron]);
+                
+            }
+        }
+        return output[NETWORK_SIZE-1];
+    }
+
+    // calculate gradient error for weights 
     public void backpropError(double[] target){
         for(int neuron = 0; neuron < NETWORK_LAYER_SIZE[NETWORK_SIZE-1]; neuron++){
             error_signal[NETWORK_SIZE-1][neuron] = (output[NETWORK_SIZE-1][neuron] - target[neuron]) 
@@ -168,10 +120,7 @@ public class NeuralNet {
         }
     }
 
-    /**
-     * Function for gradient descent learning rule for updating the weights
-     * @param learningRate learning rate
-     */
+    // gradient descent learning for weights based on nn calculation and properr
     public void updateWeights(double learningRate){
         for(int layer = 1; layer < NETWORK_SIZE; layer++){
             for(int neuron = 0; neuron < NETWORK_LAYER_SIZE[layer]; neuron++){
@@ -186,9 +135,63 @@ public class NeuralNet {
             }
         }
     }
+    
+    // avg square diff between model and reference value
+    public double MeanSquaredError(double[] input, double[] target){
+        if(input.length != INPUT_LAYER_SIZE || target.length != OUTPUT_LAYER_SIZE){
+            return 0;
+        }
+        calculateOutput(input);
+        double error = 0;
+        for(int index = 0; index < target.length; index++){
+            error += (target[index] - output[NETWORK_SIZE-1][index]) * (target[index] - output[NETWORK_SIZE-1][index]);
+        }
+        return error / (2D * target.length);
+    }
+    
+    // avg square diff between model and reference value
+    public double MeanSquaredError(Dataset set){
+        double error = 0;
+        for(int index = 0; index < set.size(); index++){
+            error += MeanSquaredError(set.getInput(index), set.getOutput(index));
+        }
+        return error / set.size();
+    }
+    
 
     // sigmoid function of n
     private double sigmoidFunction(double inputValue){
         return 1D /(1 + Math.exp(-inputValue));
     }
+    
+	// create array of size n, generate and fill array with random data from weights
+    public static double[] buildRandomArray(int range, double smallest, double biggest){
+        if(range < 1){
+            return null;
+        }
+        double[] returnArray = new double[range];
+
+        for(int index = 0; index < range; index++){
+            returnArray[index] = generateRandomValue(smallest, biggest);
+        }
+        return returnArray;
+    }
+    
+	// create 2d array of size x by y, generate and fill array with random data from weights
+    public static double[][] buildRandomArray(int rangeX, int rangeY, double smallest, double biggest){
+        if(rangeX < 1 || rangeY < 1){
+            return null;
+        }
+        double[][] returnArray = new double[rangeX][rangeY];
+        for(int index = 0; index < rangeX; index++){
+            returnArray[index] = buildRandomArray(rangeY,smallest, biggest);
+        }
+        return returnArray;
+    }
+
+    // get random n
+    public static double generateRandomValue(double smallest, double biggest){
+        return Math.random()*(biggest - smallest) + smallest;
+    }
+
 }
