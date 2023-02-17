@@ -106,10 +106,3 @@ We can now formulate more
 accurate answers from more
 complex systems using neural
 networks to compress data.
-
-Rodrigo Ferreira
-Middlesex University
-CST3170 CW2
-M00736217
-
-
