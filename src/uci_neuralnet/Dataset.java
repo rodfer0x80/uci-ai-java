@@ -2,8 +2,7 @@ package uci_neuralnet;
 import java.util.ArrayList;
 
 
-// build and parse data from csv files
-// and build set in memory
+// build and parse data from csv disk to mem
 public class Dataset {
     public final int INPUT_SIZE;
     public final int OUTPUT_SIZE;
@@ -25,7 +24,7 @@ public class Dataset {
     public Dataset extractBatch(int size) {
         if(size > 0 && size <= this.size()) {
             Dataset set = new Dataset(INPUT_SIZE, OUTPUT_SIZE);
-            Integer[] ids = Utility.randomValues(0,this.size() - 1, size);
+            Integer[] ids = randomValues(0,this.size() - 1, size);
             for(Integer i:ids) {
                 set.addData(this.getInput(i),this.getOutput(i));
             }
@@ -51,16 +50,36 @@ public class Dataset {
             return dataset.get(index)[1];
         else return null;
     }
-
-    // get input size
-    // deadcode?
-    public int getINPUT_SIZE() {
-        return INPUT_SIZE;
+    
+	// create set of size n, generate and fill array with random data from weights
+    public static Integer[] randomValues(int smallest, int biggest, int size){
+        smallest --;
+        
+        if(size > (biggest - smallest)){
+            return null;
+        }
+        
+        Integer[] values = new Integer[size];
+        for(int index = 0; index < size; index++){
+            int number = (int) (Math.random() * (biggest - smallest + 1) + smallest);
+            while(containsValue(values, number)){
+                number = (int)(Math.random() * (biggest - smallest + 1) + smallest);
+            }
+            values[index] = number;
+        }
+        return values;
+    }
+    
+    // check if array contains a specific value
+    public static <T extends Comparable<T>> boolean containsValue(T[] array, T value){
+        for(int index = 0; index < array.length; index++){
+            if(array[index] != null){
+                if(value.compareTo(array[index]) == 0 ){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    // get output size
-    // deadcode?
-    public int getOUTPUT_SIZE() {
-        return OUTPUT_SIZE;
-    }
 }

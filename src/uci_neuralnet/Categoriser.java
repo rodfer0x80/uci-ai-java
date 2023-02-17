@@ -7,10 +7,10 @@ import java.util.Scanner;
 // static frontend class for neural net
 public class Categoriser {
 
-    public static final String TRAINING_FILE_PATH = "./data/training_set.csv";
-    public static final String TESTING_FILE_PATH = "./data/test_set.csv";
+    public static final String DATASET_1_FILE_PATH = "./data/dataset_1.csv";
+    public static final String DATASET_2_FILE_PATH = "./data/dataset_2.csv";
 
-    public final static boolean SHOW_LABELS = true;
+    public final static boolean SHOW_LABELS = false;
 
     // the faster the more errors
     public static final double LEARNING_RATE = 0.05; 
@@ -34,18 +34,20 @@ public class Categoriser {
 
     // tests neural network using training set
     public static void testModel(NeuralNet net, Dataset set){
-        int correct = 0;
+		int correct = 0;
         for(int i = 0; i < set.size(); i++){
-            double highest = Utility.returnIndexOfHighestValue(net.calculationFunction(set.getInput(i)));
-            double actualHighest = Utility.returnIndexOfHighestValue(set.getOutput(i));
+            double highest = getArrayMax(net.calculateOutput(set.getInput(i)));
+            double actualHighest = getArrayMax(set.getOutput(i));
             if(SHOW_LABELS){
-                System.out.println("Guess: " + highest + " Real number: " + actualHighest);
+                System.out.println("[+] Guess: " + highest + " Real number: " + actualHighest);
             }
             if(highest == actualHighest){
                 correct ++;
             }
         }
-        Utility.printFinalResults(correct, set.size());
+        System.out.println("[+] Accuracy: " +
+        		(double)((double)correct * 100 / (double)set.size()) + "% ");
+        	System.out.println(correct + "/" + set.size());
     }
 
 
@@ -78,13 +80,24 @@ public class Categoriser {
     // bias n of epochs for training and m iterations per epoch
     // flag large model improve performance and maybe accuracy
     public static void trainModel(NeuralNet net, Dataset set, int epochs, int loops, int batch_size){
-        System.out.println("Training neural network...");
+        System.out.println("[*] Training neural network...");
         for(int epoch= 0; epoch < epochs; epoch++){
             net.train(set, loops, batch_size);
             if(SHOW_LABELS){
                 System.out.println("Epochs : " + epoch + "/" + epochs);
             }
         }
+    }
+    
+    // get index of highest value in array
+    public static int getArrayMax(double[] input){
+        int ret = 0;
+        for(int iterationIndex = 1; iterationIndex < input.length; iterationIndex++){
+            if(input[iterationIndex] > input[ret]){
+            	ret = iterationIndex;
+            }
+        }
+        return ret;
     }
 
 }
