@@ -81,5 +81,14 @@ public class Dataset {
         }
         return false;
     }
+    
+    public int getINPUT_SIZE() {
+        return INPUT_SIZE;
+    }
+
+
+    public int getOUTPUT_SIZE() {
+        return OUTPUT_SIZE;
+    }
 
 }
