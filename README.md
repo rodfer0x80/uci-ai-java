@@ -1,7 +1,5 @@
 # uci-ai-java
-> neural net for uci digit categorisation
-
-## Requirements
+>  Requirements
 ````java
 Java17 SDK (openjdk 17lts)
 JavaFX (openjfx 17lts)
